@@ -21,7 +21,7 @@ function SettingsPanel({ settingsObject, setSettingsObject }) {
             <SheetTitle className="text-white text-2xl">Settings</SheetTitle>
           </SheetHeader>
 
-          <div className="mt-6 space-y-6">
+          <div className="mt-6 space-y-4">
             {/* Clock Settings */}
             <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">Clock Settings</h2>
 
