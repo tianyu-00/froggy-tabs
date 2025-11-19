@@ -7,6 +7,8 @@ import Time from "./components/custom/time";
 import SettingsPanel from "./components/custom/settings";
 
 const tempSettings = {
+  // name
+  name: "",
   // clock
   clock: true,
   "24hourClock": true,
@@ -25,7 +27,6 @@ const tempSettings = {
 };
 
 function App() {
-  const [username, setUsername] = useState("Tian");
   const [background, setBackground] = useState(null);
   const [quote, setQuote] = useState("");
   const [settings, setSettings] = useState(tempSettings);
@@ -64,7 +65,7 @@ function App() {
           <Time className="text-white drop-shadow-lg font-bold text-9xl" use24h={settings["24hourClock"]} />
         )}
 
-        <span className="text-white font-semibold text-5xl mb-24">Hello, {username}</span>
+        <span className="text-white font-semibold text-5xl mb-24">Hello, {settings.name}</span>
 
         {settings.search && (
           <InputGroup className="bg-white/5 backdrop-blur-md rounded-full shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14">

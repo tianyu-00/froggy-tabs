@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Settings } from "lucide-react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 function SettingsPanel({ settingsObject, setSettingsObject }) {
   return (
@@ -23,6 +24,27 @@ function SettingsPanel({ settingsObject, setSettingsObject }) {
           </SheetHeader>
 
           <div className="mt-6 space-y-4">
+            {/* User Settings */}
+            <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">User Settings</h2>
+
+            {/* Username */}
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
+              <div>
+                <Label className="text-white/90 font-semibold">Name</Label>
+                <Label className="text-white/50">Name to display</Label>
+              </div>
+
+              <Input
+                type="text"
+                placeholder="Tian"
+                className="w-28"
+                defaultValue={settingsObject.name}
+                onBlur={(e) => setSettingsObject((prev) => ({ ...prev, name: e.target.value }))}
+              />
+            </div>
+
+            <Separator className="bg-white/20" />
+
             {/* Clock Settings */}
             <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">Clock Settings</h2>
 
@@ -43,7 +65,7 @@ function SettingsPanel({ settingsObject, setSettingsObject }) {
             <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
               <div>
                 <Label className="text-white/90 font-semibold">24 Hour Clock</Label>
-                <Label className="text-white/50">Switch between 12h & 24h format</Label>
+                <Label className="text-white/50">Use 24h clock format</Label>
               </div>
 
               <Switch
