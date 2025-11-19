@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Settings } from "lucide-react";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 
 function SettingsPanel({ settingsObject, setSettingsObject }) {
   return (
@@ -56,6 +57,7 @@ function SettingsPanel({ settingsObject, setSettingsObject }) {
             {/* Search Settings */}
             <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">Search Settings</h2>
 
+            {/* Search */}
             <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
               <div>
                 <Label className="text-white/90 font-semibold">Search</Label>
@@ -66,6 +68,31 @@ function SettingsPanel({ settingsObject, setSettingsObject }) {
                 checked={settingsObject.search}
                 onCheckedChange={(value) => setSettingsObject((prev) => ({ ...prev, search: value }))}
               />
+            </div>
+
+            {/* Search Engine */}
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
+              <div>
+                <Label className="text-white/90 font-semibold">Search Engine</Label>
+                <Label className="text-white/50">Search engine to use</Label>
+              </div>
+
+              <div>
+                <Select
+                  value={settingsObject.searchEngine}
+                  onValueChange={(value) => setSettingsObject((prev) => ({ ...prev, searchEngine: value }))}
+                >
+                  <SelectTrigger className="bg-white/10 text-white border-white/20 w-28">
+                    <SelectValue placeholder="Select engine" />
+                  </SelectTrigger>
+
+                  <SelectContent className="capitalize">
+                    {Object.keys(settingsObject.searchEngines).map((engine) => (
+                      <SelectItem value={engine}>{engine}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
         </ScrollArea>

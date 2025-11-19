@@ -12,6 +12,16 @@ const tempSettings = {
   "24hourClock": true,
   // search
   search: true,
+  searchEngine: "google",
+  searchEngines: {
+    google: (query) => `https://www.google.com/search?q=${encodeURIComponent(query)}`,
+    bing: (query) => `https://www.bing.com/search?q=${encodeURIComponent(query)}`,
+    duckduckgo: (query) => `https://duckduckgo.com/?q=${encodeURIComponent(query)}`,
+    baidu: (query) => `https://www.baidu.com/s?wd=${encodeURIComponent(query)}`,
+    yahoo: (query) => `https://search.yahoo.com/search?p=${encodeURIComponent(query)}`,
+    yandex: (query) => `https://yandex.com/search/?text=${encodeURIComponent(query)}`,
+    ecosia: (query) => `https://www.ecosia.org/search?q=${encodeURIComponent(query)}`,
+  },
 };
 
 function App() {
@@ -67,8 +77,9 @@ function App() {
                   e.preventDefault();
                   const query = e.target.value.trim();
                   if (query) {
-                    // window.open(https://www.google.com/search?q=${encodeURIComponent(query)}, "_blank");
-                    window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                    const engine = settings.searchEngine;
+                    const url = settings.searchEngines[engine](query);
+                    window.location.href = url;
                   }
                 }
               }}
