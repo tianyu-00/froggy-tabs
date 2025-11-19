@@ -15,21 +15,25 @@ const tempSettings = {
   // search
   search: true,
   searchEngine: "google",
-  searchEngines: {
-    google: (query) => `https://www.google.com/search?q=${encodeURIComponent(query)}`,
-    bing: (query) => `https://www.bing.com/search?q=${encodeURIComponent(query)}`,
-    duckduckgo: (query) => `https://duckduckgo.com/?q=${encodeURIComponent(query)}`,
-    baidu: (query) => `https://www.baidu.com/s?wd=${encodeURIComponent(query)}`,
-    yahoo: (query) => `https://search.yahoo.com/search?p=${encodeURIComponent(query)}`,
-    yandex: (query) => `https://yandex.com/search/?text=${encodeURIComponent(query)}`,
-    ecosia: (query) => `https://www.ecosia.org/search?q=${encodeURIComponent(query)}`,
-  },
+};
+
+const searchEngines = {
+  google: (query) => `https://www.google.com/search?q=${encodeURIComponent(query)}`,
+  bing: (query) => `https://www.bing.com/search?q=${encodeURIComponent(query)}`,
+  duckduckgo: (query) => `https://duckduckgo.com/?q=${encodeURIComponent(query)}`,
+  baidu: (query) => `https://www.baidu.com/s?wd=${encodeURIComponent(query)}`,
+  yahoo: (query) => `https://search.yahoo.com/search?p=${encodeURIComponent(query)}`,
+  yandex: (query) => `https://yandex.com/search/?text=${encodeURIComponent(query)}`,
+  ecosia: (query) => `https://www.ecosia.org/search?q=${encodeURIComponent(query)}`,
 };
 
 function App() {
   const [background, setBackground] = useState(null);
   const [quote, setQuote] = useState("");
-  const [settings, setSettings] = useState(tempSettings);
+  const [settings, setSettings] = useState(() => {
+    const saved = localStorage.getItem("dashboardSettings");
+    return saved ? JSON.parse(saved) : tempSettings;
+  });
 
   const fetchQuote = async () => {
     try {
@@ -48,6 +52,10 @@ function App() {
     setBackground(getRandomBackground());
     fetchQuote();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("dashboardSettings", JSON.stringify(settings));
+  }, [settings]);
 
   return (
     <div
@@ -79,7 +87,7 @@ function App() {
                   const query = e.target.value.trim();
                   if (query) {
                     const engine = settings.searchEngine;
-                    const url = settings.searchEngines[engine](query);
+                    const url = searchEngines[engine](query);
                     window.location.href = url;
                   }
                 }
@@ -95,7 +103,7 @@ function App() {
       {/* Footer */}
       <footer className="p-2 min-h-20 mt-auto flex items-center">
         <div className="flex-1 flex items-center justify-start h-full">
-          <SettingsPanel settingsObject={settings} setSettingsObject={setSettings} />
+          <SettingsPanel settingsObject={settings} setSettingsObject={setSettings} searchEngines={searchEngines} />
         </div>
 
         <div className="flex-3 flex items-center justify-center space-x-2 h-full">

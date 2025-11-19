@@ -8,7 +8,7 @@ import { Settings } from "lucide-react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 
-function SettingsPanel({ settingsObject, setSettingsObject }) {
+function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -109,7 +109,7 @@ function SettingsPanel({ settingsObject, setSettingsObject }) {
                   </SelectTrigger>
 
                   <SelectContent className="capitalize">
-                    {Object.keys(settingsObject.searchEngines).map((engine) => (
+                    {Object.keys(searchEngines).map((engine) => (
                       <SelectItem value={engine}>{engine}</SelectItem>
                     ))}
                   </SelectContent>
