@@ -61,17 +61,21 @@ function App() {
             }}
           />
           <InputGroupAddon>
-            <SearchIcon className="text-white" />
+            <SearchIcon className="text-white" strokeWidth={3} />
           </InputGroupAddon>
         </InputGroup>
       </div>
 
       {/* Footer */}
-      <footer className="p-2 min-h-20 mt-auto">
-        <div className="flex items-center justify-center space-x-2">
+      <footer className="p-2 min-h-20 mt-auto flex items-center">
+        <div className="flex-1 flex items-center justify-start h-full"></div>
+
+        <div className="flex-3 flex items-center justify-center space-x-2 h-full">
           <QuoteIcon className="text-white/50" />
           <p className="text-white text-lg italic">{quote}</p>
         </div>
+
+        <div className="flex-1 flex items-center justify-end h-full"></div>
       </footer>
     </div>
   );
