@@ -4,8 +4,10 @@ import { Button } from "./components/ui/button";
 import { getRandomBackground } from "./utils/getRandomBackground";
 import { CheckIcon, CreditCardIcon, InfoIcon, MailIcon, SearchIcon, StarIcon, QuoteIcon } from "lucide-react";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
+import Time from "./components/custom/time";
 
 function App() {
+  const [username, setUsername] = useState("Tian");
   const [background, setBackground] = useState(null);
   const [quote, setQuote] = useState("");
 
@@ -39,7 +41,8 @@ function App() {
 
       {/* My main content */}
       <div className="flex-1 flex flex-col items-center justify-center">
-        <span className="text-white font-semibold text-5xl mb-24">Hello, Tian</span>
+        <Time className="text-white drop-shadow-lg font-bold text-9xl" />
+        <span className="text-white font-semibold text-5xl mb-24">Hello, {username}</span>
 
         <InputGroup className="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md">
           <InputGroupInput
@@ -51,7 +54,8 @@ function App() {
                 e.preventDefault();
                 const query = e.target.value.trim();
                 if (query) {
-                  window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, "_blank");
+                  // window.open(https://www.google.com/search?q=${encodeURIComponent(query)}, "_blank");
+                  window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
                 }
               }
             }}
