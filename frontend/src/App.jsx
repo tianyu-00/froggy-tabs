@@ -5,6 +5,7 @@ import { getRandomBackground } from "./utils/getRandomBackground";
 import { CheckIcon, CreditCardIcon, InfoIcon, MailIcon, SearchIcon, StarIcon, QuoteIcon } from "lucide-react";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import Time from "./components/custom/time";
+import SettingsPanel from "./components/custom/settings";
 
 function App() {
   const [username, setUsername] = useState("Tian");
@@ -68,7 +69,9 @@ function App() {
 
       {/* Footer */}
       <footer className="p-2 min-h-20 mt-auto flex items-center">
-        <div className="flex-1 flex items-center justify-start h-full"></div>
+        <div className="flex-1 flex items-center justify-start h-full">
+          <SettingsPanel />
+        </div>
 
         <div className="flex-3 flex items-center justify-center space-x-2 h-full">
           <QuoteIcon className="text-white/50" />
@@ -82,6 +85,14 @@ function App() {
 }
 
 export default App;
+
+const tempSettings = {
+  // clock
+  clock: true,
+  "24hourClock": true,
+  // search
+  search: true,
+};
 
 /*
 NOTES:
