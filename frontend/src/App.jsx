@@ -44,11 +44,11 @@ function App() {
         <Time className="text-white drop-shadow-lg font-bold text-9xl" />
         <span className="text-white font-semibold text-5xl mb-24">Hello, {username}</span>
 
-        <InputGroup className="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md">
+        <InputGroup className="bg-white/5 backdrop-blur-md rounded-full shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14">
           <InputGroupInput
             name="search"
             placeholder="Search..."
-            className="bg-transparent text-white placeholder-gray-300! focus:outline-none focus:ring-0"
+            className="text-white placeholder-gray-300!"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
