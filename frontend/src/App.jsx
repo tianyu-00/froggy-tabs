@@ -1,16 +1,24 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { Button } from "./components/ui/button";
 import { getRandomBackground } from "./utils/getRandomBackground";
-import { CheckIcon, CreditCardIcon, InfoIcon, MailIcon, SearchIcon, StarIcon, QuoteIcon } from "lucide-react";
+import { SearchIcon, QuoteIcon } from "lucide-react";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import Time from "./components/custom/time";
 import SettingsPanel from "./components/custom/settings";
+
+const tempSettings = {
+  // clock
+  clock: true,
+  "24hourClock": true,
+  // search
+  search: true,
+};
 
 function App() {
   const [username, setUsername] = useState("Tian");
   const [background, setBackground] = useState(null);
   const [quote, setQuote] = useState("");
+  const [settings, setSettings] = useState(tempSettings);
 
   const fetchQuote = async () => {
     try {
@@ -42,35 +50,40 @@ function App() {
 
       {/* My main content */}
       <div className="flex-1 flex flex-col items-center justify-center">
-        <Time className="text-white drop-shadow-lg font-bold text-9xl" />
+        {settings.clock && (
+          <Time className="text-white drop-shadow-lg font-bold text-9xl" use24h={settings["24hourClock"]} />
+        )}
+
         <span className="text-white font-semibold text-5xl mb-24">Hello, {username}</span>
 
-        <InputGroup className="bg-white/5 backdrop-blur-md rounded-full shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14">
-          <InputGroupInput
-            name="search"
-            placeholder="Search..."
-            className="text-white placeholder-gray-300!"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                const query = e.target.value.trim();
-                if (query) {
-                  // window.open(https://www.google.com/search?q=${encodeURIComponent(query)}, "_blank");
-                  window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+        {settings.search && (
+          <InputGroup className="bg-white/5 backdrop-blur-md rounded-full shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14">
+            <InputGroupInput
+              name="search"
+              placeholder="Search..."
+              className="text-white placeholder-gray-300!"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  const query = e.target.value.trim();
+                  if (query) {
+                    // window.open(https://www.google.com/search?q=${encodeURIComponent(query)}, "_blank");
+                    window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                  }
                 }
-              }
-            }}
-          />
-          <InputGroupAddon>
-            <SearchIcon className="text-white" strokeWidth={3} />
-          </InputGroupAddon>
-        </InputGroup>
+              }}
+            />
+            <InputGroupAddon>
+              <SearchIcon className="text-white" strokeWidth={3} />
+            </InputGroupAddon>
+          </InputGroup>
+        )}
       </div>
 
       {/* Footer */}
       <footer className="p-2 min-h-20 mt-auto flex items-center">
         <div className="flex-1 flex items-center justify-start h-full">
-          <SettingsPanel />
+          <SettingsPanel settingsObject={settings} setSettingsObject={setSettings} />
         </div>
 
         <div className="flex-3 flex items-center justify-center space-x-2 h-full">
@@ -85,14 +98,6 @@ function App() {
 }
 
 export default App;
-
-const tempSettings = {
-  // clock
-  clock: true,
-  "24hourClock": true,
-  // search
-  search: true,
-};
 
 /*
 NOTES:
