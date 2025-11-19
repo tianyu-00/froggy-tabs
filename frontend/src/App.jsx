@@ -13,7 +13,7 @@ function App() {
 
   const fetchQuote = async () => {
     try {
-      const url = "https://api.quotable.io/random?maxLength=100";
+      const url = "https://api.quotable.io/random?maxLength=80";
 
       const res = await fetch(url);
       const data = await res.json();
