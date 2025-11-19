@@ -30,7 +30,7 @@ function SettingsPanel() {
 
           <div className="mt-6 space-y-6">
             <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">Clock Settings</h2>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between hover:bg transition-all duration-300 hover:bg-white/20 p-4 rounded">
               <div>
                 <Label className="text-white/90 font-semibold">Clock</Label>
                 <Label className="text-white/50 ">Show time in dashboard</Label>
@@ -38,7 +38,7 @@ function SettingsPanel() {
               <Switch />
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
               <div>
                 <Label className="text-white/90 font-semibold">24 Hour Clock</Label>
                 <Label className="text-white/50 ">Switch between 12h & 24h format</Label>
@@ -49,7 +49,7 @@ function SettingsPanel() {
             <Separator className="bg-white/20" />
 
             <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">Search Settings</h2>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
               <div>
                 <Label className="text-white/90 font-semibold">Search</Label>
                 <Label className="text-white/50 ">Show search in dashboard</Label>
