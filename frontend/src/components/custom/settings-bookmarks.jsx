@@ -10,7 +10,6 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
-
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -18,13 +17,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 import { ScrollArea } from "@/components/ui/scroll-area";
-
 import { Input } from "@/components/ui/input";
-
 import { Button } from "@/components/ui/button";
-
 import { SquarePen, Ellipsis, Pin, Trash2 } from "lucide-react";
 
 function SettingsBookmarks({ settingsObject, setSettingsObject, isEditBookmark, setIsEditBookmark }) {
