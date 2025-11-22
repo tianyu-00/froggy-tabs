@@ -70,10 +70,13 @@ function App() {
       {/* My main content */}
       <div className="flex-1 flex flex-col items-center justify-center">
         {settings.clock && (
-          <Time className="text-white drop-shadow-lg font-bold text-9xl" use24h={settings["24hourClock"]} />
+          <Time
+            className="text-white drop-shadow-lg font-bold text-[clamp(3rem,10vw,8rem)]"
+            use24h={settings["24hourClock"]}
+          />
         )}
 
-        <span className="text-white font-semibold text-5xl mb-24">Hello, {settings.name}</span>
+        <span className="text-white font-semibold mb-24 text-[clamp(2rem,7vw,4rem)]">Hello, {settings.name}</span>
 
         {settings.search && (
           <InputGroup className="bg-white/5 backdrop-blur-md rounded-full shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14">

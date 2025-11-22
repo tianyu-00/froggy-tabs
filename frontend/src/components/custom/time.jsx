@@ -29,7 +29,7 @@ function Time({ className = "", use24h = true }) {
     <div className={`relative ${className} flex justify-center`}>
       <span className="relative">
         {time}
-        {ampm && <span className="absolute text-4xl top-0">{ampm}</span>}
+        {ampm && <span className="absolute text-[clamp(1.5rem,5vw,2.25rem)] top-5">{ampm}</span>}
       </span>
     </div>
   );
