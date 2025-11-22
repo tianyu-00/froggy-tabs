@@ -8,15 +8,11 @@ import { Settings } from "lucide-react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-
-import { ModeToggle } from "@/components/mode-toggle";
 import { SquarePen } from "lucide-react";
-
 import SettingsBookmarks from "./settings-bookmarks";
 
 function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
   const [isEditBookmark, setIsEditBookmark] = useState(false);
-  const [tempBookmarkData, setTempBookmarkData] = useState(settingsObject.bookmarkData);
 
   return (
     <Sheet>
@@ -34,8 +30,6 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
           </SheetHeader>
 
           <div className="mt-6 space-y-4">
-            <ModeToggle />
-
             <Separator className="bg-white/20" />
 
             {/* User Settings */}
