@@ -110,7 +110,7 @@ function App() {
 
         {settings.bookmark && (
           <div>
-            <BookmarksPanel className="mt-5 border" />
+            <BookmarksPanel className="mt-5" />
           </div>
         )}
       </div>

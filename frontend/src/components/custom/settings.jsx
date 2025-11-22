@@ -132,6 +132,9 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
 
             <Separator className="bg-white/20" />
 
+            {/* Bookmark Settings */}
+            <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">Bookmark Settings</h2>
+
             {/* Display Bookmarks */}
             <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
               <div>
