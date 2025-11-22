@@ -49,31 +49,9 @@ function SettingsBookmarks({ settingsObject, setSettingsObject, isEditBookmark, 
                   />
                 </div>
 
-                <Input
-                  value={data.name}
-                  className="ml-4"
-                  onChange={(e) =>
-                    setSettingsObject((prev) => ({
-                      ...prev,
-                      bookmarkData: prev.bookmarkData.map((item) =>
-                        item.url === data.url ? { ...item, name: e.target.value } : item
-                      ),
-                    }))
-                  }
-                />
+                <Input value={data.name} className="ml-4" disabled />
 
-                <Input
-                  value={data.url}
-                  className="ml-2"
-                  onChange={(e) =>
-                    setSettingsObject((prev) => ({
-                      ...prev,
-                      bookmarkData: prev.bookmarkData.map((item) =>
-                        item.url === data.url ? { ...item, url: e.target.value } : item
-                      ),
-                    }))
-                  }
-                />
+                <Input value={data.url} className="ml-2" disabled />
 
                 <div className="ml-2">
                   <DropdownMenu>
