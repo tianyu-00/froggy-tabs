@@ -23,6 +23,8 @@ import { Button } from "@/components/ui/button";
 import { Ellipsis, Pin, Trash2 } from "lucide-react";
 
 function SettingsBookmarks({ settingsObject, setSettingsObject, isEditBookmark, setIsEditBookmark }) {
+  const [newBookmark, setNewBookmark] = React.useState({ name: "", url: "" });
+
   return (
     <Dialog open={isEditBookmark} onOpenChange={setIsEditBookmark}>
       <DialogContent className={"bg-white/5 backdrop-blur-2xl"}>
@@ -95,6 +97,31 @@ function SettingsBookmarks({ settingsObject, setSettingsObject, isEditBookmark, 
         </ScrollArea>
 
         <DialogFooter>
+          <div className="flex gap-2">
+            <Input
+              placeholder="Name"
+              value={newBookmark.name}
+              onChange={(e) => setNewBookmark((prev) => ({ ...prev, name: e.target.value }))}
+            />
+            <Input
+              placeholder="URL"
+              value={newBookmark.url}
+              onChange={(e) => setNewBookmark((prev) => ({ ...prev, url: e.target.value }))}
+            />
+            <Button
+              onClick={() => {
+                if (!newBookmark.name || !newBookmark.url) return;
+                setSettingsObject((prev) => ({
+                  ...prev,
+                  bookmarkData: [...prev.bookmarkData, { ...newBookmark, pinned: false }],
+                }));
+                setNewBookmark({ name: "", url: "" });
+              }}
+            >
+              Add
+            </Button>
+          </div>
+
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
