@@ -134,7 +134,9 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
 
                   <SelectContent className="capitalize">
                     {Object.keys(searchEngines).map((engine) => (
-                      <SelectItem value={engine}>{engine}</SelectItem>
+                      <SelectItem value={engine} key={engine}>
+                        {engine}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
