@@ -1,15 +1,40 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { Button } from "./components/ui/button";
 import { getRandomBackground } from "./utils/getRandomBackground";
-import { CheckIcon, CreditCardIcon, InfoIcon, MailIcon, SearchIcon, StarIcon, QuoteIcon } from "lucide-react";
+import { SearchIcon, QuoteIcon } from "lucide-react";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import Time from "./components/custom/time";
+import SettingsPanel from "./components/custom/settings";
+
+const tempSettings = {
+  // name
+  name: "",
+  displayGreeting: true,
+  // clock
+  clock: true,
+  "24hourClock": true,
+  // search
+  search: true,
+  searchEngine: "google",
+};
+
+const searchEngines = {
+  google: (query) => `https://www.google.com/search?q=${encodeURIComponent(query)}`,
+  bing: (query) => `https://www.bing.com/search?q=${encodeURIComponent(query)}`,
+  duckduckgo: (query) => `https://duckduckgo.com/?q=${encodeURIComponent(query)}`,
+  baidu: (query) => `https://www.baidu.com/s?wd=${encodeURIComponent(query)}`,
+  yahoo: (query) => `https://search.yahoo.com/search?p=${encodeURIComponent(query)}`,
+  yandex: (query) => `https://yandex.com/search/?text=${encodeURIComponent(query)}`,
+  ecosia: (query) => `https://www.ecosia.org/search?q=${encodeURIComponent(query)}`,
+};
 
 function App() {
-  const [username, setUsername] = useState("Tian");
   const [background, setBackground] = useState(null);
   const [quote, setQuote] = useState("");
+  const [settings, setSettings] = useState(() => {
+    const saved = localStorage.getItem("dashboardSettings");
+    return saved ? JSON.parse(saved) : tempSettings;
+  });
 
   const fetchQuote = async () => {
     try {
@@ -29,6 +54,10 @@ function App() {
     fetchQuote();
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("dashboardSettings", JSON.stringify(settings));
+  }, [settings]);
+
   return (
     <div
       className="h-screen w-full bg-center bg-cover flex flex-col"
@@ -41,34 +70,47 @@ function App() {
 
       {/* My main content */}
       <div className="flex-1 flex flex-col items-center justify-center">
-        <Time className="text-white drop-shadow-lg font-bold text-9xl" />
-        <span className="text-white font-semibold text-5xl mb-24">Hello, {username}</span>
-
-        <InputGroup className="bg-white/5 backdrop-blur-md rounded-full shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14">
-          <InputGroupInput
-            name="search"
-            placeholder="Search..."
-            className="text-white placeholder-gray-300!"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                const query = e.target.value.trim();
-                if (query) {
-                  // window.open(https://www.google.com/search?q=${encodeURIComponent(query)}, "_blank");
-                  window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-                }
-              }
-            }}
+        {settings.clock && (
+          <Time
+            className="text-white drop-shadow-lg font-bold text-[clamp(3rem,10vw,8rem)]"
+            use24h={settings["24hourClock"]}
           />
-          <InputGroupAddon>
-            <SearchIcon className="text-white" strokeWidth={3} />
-          </InputGroupAddon>
-        </InputGroup>
+        )}
+
+        {settings.displayGreeting && (
+          <span className="text-white font-semibold text-[clamp(2rem,7vw,4rem)] pb-4">Hello, {settings.name}</span>
+        )}
+
+        {settings.search && (
+          <InputGroup className="bg-white/5 backdrop-blur-md rounded-full shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14">
+            <InputGroupInput
+              name="search"
+              placeholder="Search..."
+              className="text-white placeholder-gray-300!"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  const query = e.target.value.trim();
+                  if (query) {
+                    const engine = settings.searchEngine;
+                    const url = searchEngines[engine](query);
+                    window.location.href = url;
+                  }
+                }
+              }}
+            />
+            <InputGroupAddon>
+              <SearchIcon className="text-white" strokeWidth={3} />
+            </InputGroupAddon>
+          </InputGroup>
+        )}
       </div>
 
       {/* Footer */}
       <footer className="p-2 min-h-20 mt-auto flex items-center">
-        <div className="flex-1 flex items-center justify-start h-full"></div>
+        <div className="flex-1 flex items-center justify-start h-full">
+          <SettingsPanel settingsObject={settings} setSettingsObject={setSettings} searchEngines={searchEngines} />
+        </div>
 
         <div className="flex-3 flex items-center justify-center space-x-2 h-full">
           <QuoteIcon className="text-white/50" />
