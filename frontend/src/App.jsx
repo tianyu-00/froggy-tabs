@@ -16,6 +16,8 @@ const tempSettings = {
   // search
   search: true,
   searchEngine: "google",
+  // bookmark
+  bookmark: true,
 };
 
 const searchEngines = {
@@ -104,6 +106,8 @@ function App() {
             </InputGroupAddon>
           </InputGroup>
         )}
+
+        {settings.bookmark && <div>This is the bookmark section</div>}
       </div>
 
       {/* Footer */}

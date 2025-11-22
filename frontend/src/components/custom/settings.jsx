@@ -129,6 +129,21 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
                 </Select>
               </div>
             </div>
+
+            <Separator className="bg-white/20" />
+
+            {/* Display Bookmarks */}
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
+              <div>
+                <Label className="text-white/90 font-semibold">Display Bookmark</Label>
+                <Label className="text-white/50">Show bookmark in dashboard</Label>
+              </div>
+
+              <Switch
+                checked={settingsObject.bookmark}
+                onCheckedChange={(value) => setSettingsObject((prev) => ({ ...prev, bookmark: value }))}
+              />
+            </div>
           </div>
         </ScrollArea>
       </SheetContent>
