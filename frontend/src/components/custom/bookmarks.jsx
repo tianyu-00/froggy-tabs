@@ -12,6 +12,7 @@ function BookmarksPanel({ className = "", bookmarkData }) {
 
           return (
             <div
+              key={data.url}
               className="h-24 w-24 flex flex-col justify-center items-center hover:bg-white/5 hover:backdrop-blur-md rounded-md hover:shadow-xl p-2 cursor-pointer"
               onClick={() => (window.location.href = data.url)}
             >
