@@ -5,6 +5,7 @@ import { SearchIcon, QuoteIcon } from "lucide-react";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import Time from "./components/custom/time";
 import SettingsPanel from "./components/custom/settings";
+import BookmarksPanel from "./components/custom/bookmarks";
 
 const tempSettings = {
   // name
@@ -107,7 +108,11 @@ function App() {
           </InputGroup>
         )}
 
-        {settings.bookmark && <div>This is the bookmark section</div>}
+        {settings.bookmark && (
+          <div>
+            <BookmarksPanel className="mt-5 border" />
+          </div>
+        )}
       </div>
 
       {/* Footer */}
