@@ -9,10 +9,10 @@ import BookmarksPanel from "./components/custom/bookmarks";
 
 // ill use this for now as temp data, will rework later
 const tempBookmarkData = [
-  { name: "Google", url: "https://www.google.com", pinned: true },
+  { name: "Google", url: "https://www.google.com/", pinned: true },
   { name: "GitHub", url: "https://github.com/", pinned: true },
   { name: "YouTube", url: "https://www.youtube.com/", pinned: false },
-  { name: "Stack Overflow XXXXXXXX", url: "https://stackoverflow.com/", pinned: true },
+  { name: "Stack Overflow", url: "https://stackoverflow.com/", pinned: true },
   { name: "Reddit", url: "https://www.reddit.com/", pinned: false },
   { name: "Notion", url: "https://www.notion.so/", pinned: true },
   { name: "Figma", url: "https://www.figma.com/", pinned: false },

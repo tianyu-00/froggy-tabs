@@ -1,4 +1,4 @@
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetDescription } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -8,21 +8,15 @@ import { Settings } from "lucide-react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from "@/components/ui/dialog";
+
 import { ModeToggle } from "@/components/mode-toggle";
 import { SquarePen } from "lucide-react";
 
+import SettingsBookmarks from "./settings-bookmarks";
+
 function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
   const [isEditBookmark, setIsEditBookmark] = useState(false);
+  const [tempBookmarkData, setTempBookmarkData] = useState(settingsObject.bookmarkData);
 
   return (
     <Sheet>
@@ -36,6 +30,7 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
         <ScrollArea className="h-full p-6">
           <SheetHeader>
             <SheetTitle className="text-white text-2xl">Settings</SheetTitle>
+            <SheetDescription></SheetDescription>
           </SheetHeader>
 
           <ModeToggle />
@@ -176,20 +171,12 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
               </Button>
             </div>
 
-            <Dialog open={isEditBookmark} onOpenChange={setIsEditBookmark}>
-              <DialogContent className={"bg-white/5 backdrop-blur-2xl"}>
-                <DialogHeader>
-                  <DialogTitle>Edit Bookmarks</DialogTitle>
-                  <DialogDescription> Add, edit, or remove bookmarks</DialogDescription>
-                </DialogHeader>
-
-                <DialogFooter>
-                  <DialogClose>
-                    <Button variant="outline">Cancel</Button>
-                  </DialogClose>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+            <SettingsBookmarks
+              settingsObject={settingsObject}
+              setSettingsObject={setSettingsObject}
+              isEditBookmark={isEditBookmark}
+              setIsEditBookmark={setIsEditBookmark}
+            />
           </div>
         </ScrollArea>
       </SheetContent>
