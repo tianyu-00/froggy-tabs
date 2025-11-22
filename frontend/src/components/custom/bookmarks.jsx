@@ -1,10 +1,11 @@
 import React from "react";
 
 function BookmarksPanel({ className = "", bookmarkData }) {
+  const pinnedBookmarks = bookmarkData.filter((data) => data.pinned).slice(0, 12);
   return (
     <div className={`${className} text-white`}>
       <div className="grid grid-cols-6 gap-4">
-        {bookmarkData.map((data) => {
+        {pinnedBookmarks.map((data, index) => {
           if (!data.pinned) return;
           const faviconUrl = `${new URL(data.url).origin}/favicon.ico`;
           // https://stackoverflow.com/questions/9126105/blank-image-encoded-as-data-uri
@@ -12,7 +13,7 @@ function BookmarksPanel({ className = "", bookmarkData }) {
 
           return (
             <div
-              key={data.url}
+              key={index}
               className="h-24 w-24 flex flex-col justify-center items-center hover:bg-white/5 hover:backdrop-blur-md rounded-md hover:shadow-xl p-2 cursor-pointer"
               onClick={() => (window.location.href = data.url)}
             >

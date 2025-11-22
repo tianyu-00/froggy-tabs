@@ -33,8 +33,11 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
             <SheetDescription></SheetDescription>
           </SheetHeader>
 
-          <ModeToggle />
           <div className="mt-6 space-y-4">
+            <ModeToggle />
+
+            <Separator className="bg-white/20" />
+
             {/* User Settings */}
             <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">User Settings</h2>
 
@@ -165,7 +168,7 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
             <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
               <div>
                 <Label className="text-white/90 font-semibold">Edit Bookmark</Label>
-                <Label className="text-white/50">Edit bookmarks</Label>
+                <Label className="text-white/50">Changes to bookmarks</Label>
               </div>
 
               <Button variant="ghost" className={"text-white"} onClick={() => setIsEditBookmark(true)}>

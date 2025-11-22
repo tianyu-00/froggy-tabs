@@ -6,18 +6,10 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/in
 import Time from "./components/custom/time";
 import SettingsPanel from "./components/custom/settings";
 import BookmarksPanel from "./components/custom/bookmarks";
+import { Toaster } from "@/components/ui/sonner";
 
 // ill use this for now as temp data, will rework later
-const tempBookmarkData = [
-  { name: "Google", url: "https://www.google.com/", pinned: true },
-  { name: "GitHub", url: "https://github.com/", pinned: true },
-  { name: "YouTube", url: "https://www.youtube.com/", pinned: false },
-  { name: "Stack Overflow", url: "https://stackoverflow.com/", pinned: true },
-  { name: "Reddit", url: "https://www.reddit.com/", pinned: false },
-  { name: "Notion", url: "https://www.notion.so/", pinned: true },
-  { name: "Figma", url: "https://www.figma.com/", pinned: false },
-  { name: "Netflix", url: "https://www.netflix.com/", pinned: false },
-];
+const tempBookmarkData = [];
 
 const tempSettings = {
   // name
@@ -81,6 +73,7 @@ function App() {
         backgroundImage: `url(${background})`,
       }}
     >
+      <Toaster position="top-center" />
       {/* Header */}
       <header className="p-2 min-h-20"></header>
 

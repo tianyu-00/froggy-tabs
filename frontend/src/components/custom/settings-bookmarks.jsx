@@ -21,6 +21,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Ellipsis, Pin, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 function SettingsBookmarks({ settingsObject, setSettingsObject, isEditBookmark, setIsEditBookmark }) {
   const [newBookmark, setNewBookmark] = React.useState({ name: "", url: "" });
@@ -30,15 +31,15 @@ function SettingsBookmarks({ settingsObject, setSettingsObject, isEditBookmark, 
       <DialogContent className={"bg-white/5 backdrop-blur-2xl"}>
         <DialogHeader>
           <DialogTitle className={"text-white"}>Edit Bookmarks</DialogTitle>
-          <DialogDescription> Add, edit, or remove bookmarks</DialogDescription>
+          <DialogDescription> Add, pin, or remove bookmarks</DialogDescription>
         </DialogHeader>
 
         <ScrollArea className={"h-64 p-4"}>
-          {settingsObject.bookmarkData.map((data) => {
+          {settingsObject.bookmarkData.map((data, index) => {
             const faviconUrl = `${new URL(data.url).origin}/favicon.ico`;
             const transparentPixel = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
             return (
-              <div className="flex flex-row mb-4 items-center">
+              <div className="flex flex-row mb-4 items-center" key={index}>
                 <div className="bg-white p-2 rounded-full w-16">
                   <img
                     className="rounded-full h-full w-full"
@@ -64,14 +65,22 @@ function SettingsBookmarks({ settingsObject, setSettingsObject, isEditBookmark, 
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem
-                        onClick={() =>
+                        onClick={() => {
+                          if (!data.pinned) {
+                            const pinnedCount = settingsObject.bookmarkData.filter((b) => b.pinned).length;
+                            if (pinnedCount >= 12) {
+                              toast.error("You can only pin up to 12 bookmarks");
+                              return;
+                            }
+                          }
+
                           setSettingsObject((prev) => ({
                             ...prev,
                             bookmarkData: prev.bookmarkData.map((item) =>
                               item.url === data.url ? { ...item, pinned: !item.pinned } : item
                             ),
-                          }))
-                        }
+                          }));
+                        }}
                       >
                         <Pin className={`mr-2 h-4 w-4 ${data.pinned ? "text-yellow-400" : "text-white"}`} />
                         {data.pinned ? "Unpin" : "Pin"}
