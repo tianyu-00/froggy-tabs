@@ -20,7 +20,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SquarePen, Ellipsis, Pin, Trash2 } from "lucide-react";
+import { Ellipsis, Pin, Trash2 } from "lucide-react";
 
 function SettingsBookmarks({ settingsObject, setSettingsObject, isEditBookmark, setIsEditBookmark }) {
   return (
