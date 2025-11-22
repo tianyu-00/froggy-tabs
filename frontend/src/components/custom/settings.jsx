@@ -43,6 +43,19 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
               />
             </div>
 
+            {/* Display Greeting Message */}
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
+              <div>
+                <Label className="text-white/90 font-semibold">Display Greeting</Label>
+                <Label className="text-white/50">Show greeting in dashboard</Label>
+              </div>
+
+              <Switch
+                checked={settingsObject.displayGreeting}
+                onCheckedChange={(value) => setSettingsObject((prev) => ({ ...prev, displayGreeting: value }))}
+              />
+            </div>
+
             <Separator className="bg-white/20" />
 
             {/* Clock Settings */}

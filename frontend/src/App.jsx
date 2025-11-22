@@ -9,6 +9,7 @@ import SettingsPanel from "./components/custom/settings";
 const tempSettings = {
   // name
   name: "",
+  displayGreeting: true,
   // clock
   clock: true,
   "24hourClock": true,
@@ -76,7 +77,9 @@ function App() {
           />
         )}
 
-        <span className="text-white font-semibold mb-24 text-[clamp(2rem,7vw,4rem)]">Hello, {settings.name}</span>
+        {settings.displayGreeting && (
+          <span className="text-white font-semibold text-[clamp(2rem,7vw,4rem)] pb-4">Hello, {settings.name}</span>
+        )}
 
         {settings.search && (
           <InputGroup className="bg-white/5 backdrop-blur-md rounded-full shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14">
