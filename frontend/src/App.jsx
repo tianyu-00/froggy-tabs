@@ -7,6 +7,18 @@ import Time from "./components/custom/time";
 import SettingsPanel from "./components/custom/settings";
 import BookmarksPanel from "./components/custom/bookmarks";
 
+// ill use this for now as temp data, will rework later
+const tempBookmarkData = [
+  { name: "Google", url: "https://www.google.com", pinned: true },
+  { name: "GitHub", url: "https://github.com/", pinned: true },
+  { name: "YouTube", url: "https://www.youtube.com/", pinned: false },
+  { name: "Stack Overflow XXXXXXXX", url: "https://stackoverflow.com/", pinned: true },
+  { name: "Reddit", url: "https://www.reddit.com/", pinned: false },
+  { name: "Notion", url: "https://www.notion.so/", pinned: true },
+  { name: "Figma", url: "https://www.figma.com/", pinned: false },
+  { name: "Netflix", url: "https://www.netflix.com/", pinned: false },
+];
+
 const tempSettings = {
   // name
   name: "",
@@ -19,6 +31,7 @@ const tempSettings = {
   searchEngine: "google",
   // bookmark
   bookmark: true,
+  bookmarkData: tempBookmarkData || [],
 };
 
 const searchEngines = {
@@ -110,7 +123,7 @@ function App() {
 
         {settings.bookmark && (
           <div>
-            <BookmarksPanel className="mt-5" />
+            <BookmarksPanel className="mt-5" bookmarkData={settings.bookmarkData} />
           </div>
         )}
       </div>

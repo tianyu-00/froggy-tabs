@@ -7,8 +7,23 @@ import { Separator } from "@/components/ui/separator";
 import { Settings } from "lucide-react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { ModeToggle } from "@/components/mode-toggle";
+import { SquarePen } from "lucide-react";
 
 function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
+  const [isEditBookmark, setIsEditBookmark] = useState(false);
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -17,12 +32,13 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="left" className="w-96 border-none bg-white/5 backdrop-blur-2xl text-white p-0">
+      <SheetContent side="left" className="w-96 border-none bg-white/5 backdrop-blur-2xl p-0">
         <ScrollArea className="h-full p-6">
           <SheetHeader>
             <SheetTitle className="text-white text-2xl">Settings</SheetTitle>
           </SheetHeader>
 
+          <ModeToggle />
           <div className="mt-6 space-y-4">
             {/* User Settings */}
             <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">User Settings</h2>
@@ -147,6 +163,33 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
                 onCheckedChange={(value) => setSettingsObject((prev) => ({ ...prev, bookmark: value }))}
               />
             </div>
+
+            {/* Display Bookmarks */}
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
+              <div>
+                <Label className="text-white/90 font-semibold">Edit Bookmark</Label>
+                <Label className="text-white/50">Edit bookmarks</Label>
+              </div>
+
+              <Button variant="ghost" className={"text-white"} onClick={() => setIsEditBookmark(true)}>
+                <SquarePen />
+              </Button>
+            </div>
+
+            <Dialog open={isEditBookmark} onOpenChange={setIsEditBookmark}>
+              <DialogContent className={"bg-white/5 backdrop-blur-2xl"}>
+                <DialogHeader>
+                  <DialogTitle>Edit Bookmarks</DialogTitle>
+                  <DialogDescription> Add, edit, or remove bookmarks</DialogDescription>
+                </DialogHeader>
+
+                <DialogFooter>
+                  <DialogClose>
+                    <Button variant="outline">Cancel</Button>
+                  </DialogClose>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         </ScrollArea>
       </SheetContent>
