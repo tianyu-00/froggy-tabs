@@ -6,7 +6,7 @@ export function getRandomBackground() {
 
   const randomIndex = Math.floor(Math.random() * imageArray.length);
 
-  console.log("Image:", paths[randomIndex]);
+  // console.log("Image:", paths[randomIndex]);
 
   return imageArray[randomIndex];
 }

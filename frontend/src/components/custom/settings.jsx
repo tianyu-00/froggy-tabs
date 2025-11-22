@@ -1,4 +1,4 @@
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetDescription } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -7,8 +7,13 @@ import { Separator } from "@/components/ui/separator";
 import { Settings } from "lucide-react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { SquarePen } from "lucide-react";
+import SettingsBookmarks from "./settings-bookmarks";
 
 function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
+  const [isEditBookmark, setIsEditBookmark] = useState(false);
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -17,13 +22,16 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="left" className="w-96 border-none bg-white/5 backdrop-blur-2xl text-white p-0">
+      <SheetContent side="left" className="w-96 border-none bg-white/5 backdrop-blur-2xl p-0">
         <ScrollArea className="h-full p-6">
           <SheetHeader>
             <SheetTitle className="text-white text-2xl">Settings</SheetTitle>
+            <SheetDescription></SheetDescription>
           </SheetHeader>
 
           <div className="mt-6 space-y-4">
+            <Separator className="bg-white/20" />
+
             {/* User Settings */}
             <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">User Settings</h2>
 
@@ -123,12 +131,51 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
 
                   <SelectContent className="capitalize">
                     {Object.keys(searchEngines).map((engine) => (
-                      <SelectItem value={engine}>{engine}</SelectItem>
+                      <SelectItem value={engine} key={engine}>
+                        {engine}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
             </div>
+
+            <Separator className="bg-white/20" />
+
+            {/* Bookmark Settings */}
+            <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">Bookmark Settings</h2>
+
+            {/* Display Bookmarks */}
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
+              <div>
+                <Label className="text-white/90 font-semibold">Display Bookmark</Label>
+                <Label className="text-white/50">Show bookmark in dashboard</Label>
+              </div>
+
+              <Switch
+                checked={settingsObject.bookmark}
+                onCheckedChange={(value) => setSettingsObject((prev) => ({ ...prev, bookmark: value }))}
+              />
+            </div>
+
+            {/* Display Bookmarks */}
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
+              <div>
+                <Label className="text-white/90 font-semibold">Edit Bookmark</Label>
+                <Label className="text-white/50">Changes to bookmarks</Label>
+              </div>
+
+              <Button variant="ghost" className={"text-white"} onClick={() => setIsEditBookmark(true)}>
+                <SquarePen />
+              </Button>
+            </div>
+
+            <SettingsBookmarks
+              settingsObject={settingsObject}
+              setSettingsObject={setSettingsObject}
+              isEditBookmark={isEditBookmark}
+              setIsEditBookmark={setIsEditBookmark}
+            />
           </div>
         </ScrollArea>
       </SheetContent>

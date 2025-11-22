@@ -5,6 +5,11 @@ import { SearchIcon, QuoteIcon } from "lucide-react";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import Time from "./components/custom/time";
 import SettingsPanel from "./components/custom/settings";
+import BookmarksPanel from "./components/custom/bookmarks";
+import { Toaster } from "@/components/ui/sonner";
+
+// ill use this for now as temp data, will rework later
+const tempBookmarkData = [];
 
 const tempSettings = {
   // name
@@ -16,6 +21,9 @@ const tempSettings = {
   // search
   search: true,
   searchEngine: "google",
+  // bookmark
+  bookmark: true,
+  bookmarkData: tempBookmarkData || [],
 };
 
 const searchEngines = {
@@ -65,6 +73,7 @@ function App() {
         backgroundImage: `url(${background})`,
       }}
     >
+      <Toaster position="top-center" />
       {/* Header */}
       <header className="p-2 min-h-20"></header>
 
@@ -103,6 +112,12 @@ function App() {
               <SearchIcon className="text-white" strokeWidth={3} />
             </InputGroupAddon>
           </InputGroup>
+        )}
+
+        {settings.bookmark && (
+          <div>
+            <BookmarksPanel className="mt-5" bookmarkData={settings.bookmarkData} />
+          </div>
         )}
       </div>
 
