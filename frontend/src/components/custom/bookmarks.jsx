@@ -2,14 +2,14 @@ import React from "react";
 
 // ill use this for now as temp data, will rework later
 const bookmarkData = [
-  { name: "Google", url: "https://www.google.com/xxxxx", icon: "", pinned: true },
-  { name: "GitHub", url: "https://github.com/", icon: "", pinned: true },
-  { name: "YouTube", url: "https://www.youtube.com/", icon: "", pinned: false },
-  { name: "Stack Overflow XXXXXXXX", url: "https://stackoverflow.com/", icon: "", pinned: true },
-  { name: "Reddit", url: "https://www.reddit.com/", icon: "", pinned: false },
-  { name: "Notion", url: "https://www.notion.so/", icon: "", pinned: true },
-  { name: "Figma", url: "https://www.figma.com/", icon: "", pinned: false },
-  { name: "Netflix", url: "https://www.netflix.com/", icon: "", pinned: false },
+  { name: "Google", url: "https://www.google.com", pinned: true },
+  { name: "GitHub", url: "https://github.com/", pinned: true },
+  { name: "YouTube", url: "https://www.youtube.com/", pinned: false },
+  { name: "Stack Overflow XXXXXXXX", url: "https://stackoverflow.com/", pinned: true },
+  { name: "Reddit", url: "https://www.reddit.com/", pinned: false },
+  { name: "Notion", url: "https://www.notion.so/", pinned: true },
+  { name: "Figma", url: "https://www.figma.com/", pinned: false },
+  { name: "Netflix", url: "https://www.netflix.com/", pinned: false },
 ];
 
 function BookmarksPanel({ className = "" }) {
