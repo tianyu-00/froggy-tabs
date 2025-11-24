@@ -7,6 +7,7 @@ import Time from "./components/custom/time";
 import SettingsPanel from "./components/custom/settings";
 import BookmarksPanel from "./components/custom/bookmarks";
 import { Toaster } from "@/components/ui/sonner";
+import Weather from "./components/custom/weather";
 
 // ill use this for now as temp data, will rework later
 const tempBookmarkData = [];
@@ -75,19 +76,24 @@ function App() {
     >
       <Toaster position="top-center" />
       {/* Header */}
-      <header className="p-2 min-h-20"></header>
+      <header className="p-2 min-h-20 flex">
+        <div className="flex-1 " />
+        <div className="flex-1 " />
+        <div className="flex-1">
+          <div className="flex justify-end items-center h-full p-4">
+            <Weather />
+          </div>
+        </div>
+      </header>
 
       {/* My main content */}
       <div className="flex-1 flex flex-col items-center justify-center">
         {settings.clock && (
-          <Time
-            className="text-white drop-shadow-lg font-bold text-[clamp(3rem,10vw,8rem)]"
-            use24h={settings["24hourClock"]}
-          />
+          <Time className="text-white drop-shadow-lg text-[clamp(3rem,10vw,8rem)]" use24h={settings["24hourClock"]} />
         )}
 
         {settings.displayGreeting && (
-          <span className="text-white font-semibold text-[clamp(2rem,7vw,4rem)] pb-4">Hello, {settings.name}</span>
+          <span className="text-white text-[clamp(2rem,7vw,4rem)] pb-4">Hello, {settings.name}</span>
         )}
 
         {settings.search && (
