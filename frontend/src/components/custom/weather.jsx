@@ -109,7 +109,6 @@ function Weather() {
       {weather && locationStats && (
         <div className="flex flex-col items-center">
           <div className="flex gap-2 text-2xl justify-center items-center">
-            {/* <Cloudy size={28} /> */}
             {getWeatherIcon(weather.current.weather_code)}
             <span>
               {weather.current.temperature_2m ?? "N/A"}
