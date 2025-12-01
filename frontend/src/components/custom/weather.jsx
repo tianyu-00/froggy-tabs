@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Cloudy } from "lucide-react";
+import { getWeatherIcon } from "@/components/custom/weather-code-icon";
 
 function Weather() {
   const [locationStats, setLocationStats] = useState({});
@@ -7,7 +7,7 @@ function Weather() {
 
   const loadWeather = async (latitude, longitude) => {
     try {
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&current=temperature_2m`;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&current=temperature_2m,apparent_temperature,weather_code`;
       const res = await fetch(url);
       const data = await res.json();
       setWeather(data);
@@ -97,6 +97,8 @@ function Weather() {
           localStorage.setItem("weather", JSON.stringify({ timestamp: Date.now(), data: weatherData }));
         }
       }
+
+      console.log(cachedWeather);
     };
 
     getLocationAndWeather();
@@ -105,9 +107,10 @@ function Weather() {
   return (
     <div>
       {weather && locationStats && (
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center">
           <div className="flex gap-2 text-2xl justify-center items-center">
-            <Cloudy size={28} />
+            {/* <Cloudy size={28} /> */}
+            {getWeatherIcon(weather.current.weather_code)}
             <span>
               {weather.current.temperature_2m ?? "N/A"}
               {weather.current_units.temperature_2m ?? ""}
