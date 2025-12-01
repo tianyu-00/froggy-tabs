@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getWeatherIcon } from "@/components/custom/weather-code-icon";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 function Weather() {
   const [locationStats, setLocationStats] = useState({});
@@ -107,16 +108,21 @@ function Weather() {
   return (
     <div>
       {weather && locationStats && (
-        <div className="flex flex-col items-center">
-          <div className="flex gap-2 text-2xl justify-center items-center">
-            {getWeatherIcon(weather.current.weather_code)}
-            <span>
-              {weather.current.temperature_2m ?? "N/A"}
-              {weather.current_units.temperature_2m ?? ""}
-            </span>
-          </div>
-          <span>{locationStats.city ?? "Unknown"}</span>
-        </div>
+        <Popover>
+          <PopoverTrigger>
+            <div className="flex flex-col items-center p-2 rounded-md hover:bg-white/5 hover:backdrop-blur-2xl cursor-pointer">
+              <div className="flex gap-2 text-2xl justify-center items-center">
+                {getWeatherIcon(weather.current.weather_code, 28)}
+                <span>
+                  {weather.current.temperature_2m ?? "N/A"}
+                  {weather.current_units.temperature_2m ?? ""}
+                </span>
+              </div>
+              <span>{locationStats.city ?? "Unknown"}</span>
+            </div>
+          </PopoverTrigger>
+          <PopoverContent>Place content for the popover here.</PopoverContent>
+        </Popover>
       )}
     </div>
   );

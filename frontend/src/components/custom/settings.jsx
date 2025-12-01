@@ -17,7 +17,10 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" className="text-white">
+        <Button
+          size="icon"
+          className="text-white bg-transparent hover:bg-white/5 hover:backdrop-blur-2xl cursor-pointer"
+        >
           <Settings />
         </Button>
       </SheetTrigger>

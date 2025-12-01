@@ -1,21 +1,21 @@
 import { CloudOff, CloudSun, Cloudy, CloudSnow, CloudRain, CloudLightning, CloudFog, CloudDrizzle } from "lucide-react";
 
-export const getWeatherIcon = (code) => {
+export const getWeatherIcon = (code, size = 24) => {
   switch (code) {
     // clear / mainly clear
     case 0:
     case 1:
-      return <CloudSun size={28} />;
+      return <CloudSun size={size} />;
 
     // partly / overcast
     case 2:
     case 3:
-      return <Cloudy size={28} />;
+      return <Cloudy size={size} />;
 
     // fog
     case 45:
     case 48:
-      return <CloudFog size={28} />;
+      return <CloudFog size={size} />;
 
     // drizzle
     case 51:
@@ -23,7 +23,7 @@ export const getWeatherIcon = (code) => {
     case 55:
     case 56:
     case 57:
-      return <CloudDrizzle size={28} />;
+      return <CloudDrizzle size={size} />;
 
     // rain / freezing rain
     case 61:
@@ -31,7 +31,7 @@ export const getWeatherIcon = (code) => {
     case 65:
     case 66:
     case 67:
-      return <CloudRain size={28} />;
+      return <CloudRain size={size} />;
 
     // snow / snow showers
     case 71:
@@ -40,23 +40,23 @@ export const getWeatherIcon = (code) => {
     case 77:
     case 85:
     case 86:
-      return <CloudSnow size={28} />;
+      return <CloudSnow size={size} />;
 
     // showers
     case 80:
     case 81:
     case 82:
-      return <CloudRain size={28} />;
+      return <CloudRain size={size} />;
 
     // thunder
     case 95:
     case 96:
     case 99:
-      return <CloudLightning size={28} />;
+      return <CloudLightning size={size} />;
 
     // fallback to cloud off
     default:
-      return <CloudOff size={28} />;
+      return <CloudOff size={size} />;
   }
 };
 
