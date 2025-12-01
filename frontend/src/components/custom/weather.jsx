@@ -85,9 +85,9 @@ function Weather() {
 
       setLocationStats(location);
 
-      // cached weather // 24 hours - 24 hours should be good enough but it has data for the next 7 days
+      // cached weather
       const cachedWeather = JSON.parse(localStorage.getItem("weather"));
-      if (cachedWeather && Date.now() - cachedWeather.timestamp < 24 * 60 * 60 * 1000) {
+      if (cachedWeather && Date.now() - cachedWeather.timestamp < 5 * 60 * 1000) {
         setWeather(cachedWeather.data);
         console.log("Using cached weather data");
       } else {
