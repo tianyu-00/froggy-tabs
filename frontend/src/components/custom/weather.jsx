@@ -85,7 +85,7 @@ function Weather() {
 
       setLocationStats(location);
 
-      // cached weather
+      // cached weather // 5 mins - prevents api spam
       const cachedWeather = JSON.parse(localStorage.getItem("weather"));
       if (cachedWeather && Date.now() - cachedWeather.timestamp < 5 * 60 * 1000) {
         setWeather(cachedWeather.data);
