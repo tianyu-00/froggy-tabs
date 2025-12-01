@@ -102,6 +102,7 @@ function App() {
               name="search"
               placeholder="Search..."
               className="text-white placeholder-gray-300!"
+              autoComplete="off"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
