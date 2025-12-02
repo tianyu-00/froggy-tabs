@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getWeatherIcon } from "@/components/custom/weather-code-icon";
+import { getWeatherIcon } from "@/components/custom/weather-code";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import WeatherCardContent from "./weather-card-content";
 
 function Weather() {
   const [locationStats, setLocationStats] = useState({});
@@ -8,7 +9,7 @@ function Weather() {
 
   const loadWeather = async (latitude, longitude) => {
     try {
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&current=temperature_2m,apparent_temperature,weather_code`;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature,is_day,wind_speed_10m,wind_direction_10m,wind_gusts_10m,snowfall,showers,rain,precipitation,cloud_cover,pressure_msl,surface_pressure`;
       const res = await fetch(url);
       const data = await res.json();
       setWeather(data);
@@ -121,7 +122,9 @@ function Weather() {
               <span>{locationStats.city ?? "Unknown"}</span>
             </div>
           </PopoverTrigger>
-          <PopoverContent>Place content for the popover here.</PopoverContent>
+          <PopoverContent className={"w-[--radix-popover-trigger-width] bg-white/5 backdrop-blur-2xl"}>
+            <WeatherCardContent weather={weather} location={locationStats} />
+          </PopoverContent>
         </Popover>
       )}
     </div>
@@ -139,3 +142,5 @@ export default Weather;
 // https://nominatim.openstreetmap.org/reverse?lat=<value>&lon=<value>&<params>
 
 // https://ipapi.co/api/?javascript#introduction
+
+// https://github.com/shadcn-ui/ui/issues/3045#issuecomment-2005644793 - this adjusts the issue where popover width would not change to adapt to its content
