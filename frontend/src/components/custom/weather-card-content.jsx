@@ -14,10 +14,10 @@ function WeatherCardContent({ weather, location }) {
           {/* <p className="text-muted-foreground text-sm">xxx</p> */}
 
           {/* Current Weather Info */}
-          <div className="flex gap-6">
+          <div className="flex gap-2">
             {/* left */}
-            <div className="flex items-center gap-2">
-              <div>{getWeatherIcon(weather.current.weather_code, 52)}</div>
+            <div className="flex items-center justify-center px-8">
+              <div>{getWeatherIcon(weather.current.weather_code, 82)}</div>
             </div>
 
             {/* right */}
