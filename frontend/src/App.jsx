@@ -135,7 +135,7 @@ function App() {
         </div>
 
         <div className="flex-3 flex items-center justify-center space-x-2 h-full">
-          <QuoteIcon className="text-white/50" />
+          <QuoteIcon className="text-white/50" size={16} />
           <p className="text-white italic">{quote}</p>
         </div>
 
