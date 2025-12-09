@@ -1,6 +1,7 @@
 import React from "react";
 import { getWeatherIcon, getWeatherText } from "./weather-code";
 import { MapPin } from "lucide-react";
+import WeatherTempChart from "./weather-chart";
 
 function WeatherCardContent({ weather, location }) {
   return (
@@ -65,6 +66,8 @@ function WeatherCardContent({ weather, location }) {
             </div>
           </div>
         </div>
+
+        <WeatherTempChart data={weather} />
       </div>
     </div>
   );
