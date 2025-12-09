@@ -1,6 +1,7 @@
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { useState } from "react";
 
 const chartConfig = {
   weather: {
@@ -10,6 +11,7 @@ const chartConfig = {
 };
 
 export default function WeatherTempChart({ data }) {
+  const [isTooltipActive, setIsTooltipActive] = useState(false);
   const today = new Date().toISOString().split("T")[0];
 
   const chartData = data.hourly.time
@@ -30,7 +32,11 @@ export default function WeatherTempChart({ data }) {
   return (
     <Card className={"bg-white/5 backdrop-blur-2xl"}>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer
+          config={chartConfig}
+          onMouseEnter={() => setIsTooltipActive(true)}
+          onMouseLeave={() => setIsTooltipActive(false)}
+        >
           <LineChart
             accessibilityLayer
             data={chartData}
@@ -56,7 +62,7 @@ export default function WeatherTempChart({ data }) {
               tickMargin={4}
               stroke="var(--color-weather)"
             />
-            <ChartTooltip cursor={true} content={<ChartTooltipContent />} />
+            <ChartTooltip cursor={true} content={<ChartTooltipContent />} active={isTooltipActive} />
             <Line dataKey="temp" type="natural" stroke="var(--color-weather)" strokeWidth={2} dot={false} />
           </LineChart>
         </ChartContainer>
