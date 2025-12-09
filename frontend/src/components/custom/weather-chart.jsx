@@ -2,10 +2,15 @@ import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { useState } from "react";
+import { getWeatherText } from "./weather-code";
 
 const chartConfig = {
+  temperature: {
+    label: "temperature",
+    color: "var(--chart-1)",
+  },
   weather: {
-    label: "Weather",
+    label: "weather",
     color: "var(--chart-1)",
   },
 };
@@ -25,6 +30,7 @@ export default function WeatherTempChart({ data }) {
           minute: "2-digit",
         }),
         temp: data.hourly.temperature_2m[i],
+        weather: getWeatherText(data.hourly.weather_code[i]),
       };
     })
     .filter((d) => d.raw.startsWith(today));
@@ -46,24 +52,18 @@ export default function WeatherTempChart({ data }) {
             }}
           >
             <CartesianGrid vertical={true} horizontal={false} />
-            <XAxis
-              dataKey="time"
-              interval={3}
-              tickLine={true}
-              axisLine={true}
-              tickMargin={4}
-              stroke="var(--color-weather)"
-            />
-            <YAxis
-              dataKey="temp"
-              width={12}
-              tickLine={true}
-              axisLine={true}
-              tickMargin={4}
-              stroke="var(--color-weather)"
-            />
+            <XAxis dataKey="time" interval={3} tickLine={true} axisLine={true} tickMargin={4} stroke="white" />
+            <YAxis dataKey="temp" width={12} tickLine={true} axisLine={true} tickMargin={4} stroke="white" />
             <ChartTooltip cursor={true} content={<ChartTooltipContent />} active={isTooltipActive} />
-            <Line dataKey="temp" type="natural" stroke="var(--color-weather)" strokeWidth={2} dot={false} />
+            <Line dataKey="temp" type="natural" stroke="var(--color-temperature)" strokeWidth={2} dot={false} />
+            <Line
+              dataKey="weather"
+              type="natural"
+              stroke="var(--color-weather)"
+              strokeWidth={0}
+              dot={false}
+              activeDot={false}
+            />
           </LineChart>
         </ChartContainer>
       </CardContent>

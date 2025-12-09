@@ -9,7 +9,7 @@ function Weather() {
 
   const loadWeather = async (latitude, longitude) => {
     try {
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature,is_day,wind_speed_10m,wind_direction_10m,wind_gusts_10m,snowfall,showers,rain,precipitation,cloud_cover,pressure_msl,surface_pressure`;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,weather_code&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature,is_day,wind_speed_10m,wind_direction_10m,wind_gusts_10m,snowfall,showers,rain,precipitation,cloud_cover,pressure_msl,surface_pressure`;
       const res = await fetch(url);
       const data = await res.json();
       setWeather(data);
