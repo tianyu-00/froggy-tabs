@@ -10,4 +10,4 @@
 
 [Aron Visuals - aron-visuals-LSFuPFE9vKE-unsplash.jpg](https://unsplash.com/@aronvisuals)
 
-[Tyler Sturm - tyler-sturm-8WCtxR2kpTk-unsplash.jpg](https://unsplash.com/@tyler_s)
+[Artem Shuba - artem-shuba-h4bdQp5uYU8-unsplash.jpg](https://unsplash.com/@ashuba)
