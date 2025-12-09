@@ -151,8 +151,13 @@ export default App;
 
 /*
 NOTES:
-Header - Mid - Foot
 
 Quotes API: https://api.quotable.io/random?maxLength=100
 
+Use zenquotes later on maybe: https://zenquotes.io/
+and do as said: Use the quotes call to pull 50 random quotes and loop them locally within your app. After a couple hours, refresh the list in your app by calling ZenQuotes again.
+https://zenquotes.io/api/quotes - Generate a JSON array of 50 random quotes on each request
+
+Theres also onthisday: https://today.zenquotes.io/
+ill decide again which one to use
 */
