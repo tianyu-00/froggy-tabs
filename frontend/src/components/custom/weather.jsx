@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getWeatherIcon } from "@/components/custom/weather-code";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import WeatherCardContent from "./weather-card-content";
+import { buildWeatherLink } from "@/utils/weatherLinkBuilder";
 
 function Weather() {
   const [locationStats, setLocationStats] = useState({});
@@ -13,7 +14,30 @@ function Weather() {
 
   const loadWeather = async (latitude, longitude) => {
     try {
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,weather_code&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature,is_day,wind_speed_10m,wind_direction_10m,wind_gusts_10m,snowfall,showers,rain,precipitation,cloud_cover,pressure_msl,surface_pressure`;
+      const weatherOptions = {
+        hourly: ["temperature_2m", "weather_code"],
+        current: [
+          "temperature_2m",
+          "weather_code",
+          "relative_humidity_2m",
+          "apparent_temperature",
+          "is_day",
+          "wind_speed_10m",
+          "wind_direction_10m",
+          "wind_gusts_10m",
+          "snowfall",
+          "showers",
+          "rain",
+          "precipitation",
+          "cloud_cover",
+          "pressure_msl",
+          "surface_pressure",
+        ],
+        temperature_unit: "",
+        wind_speed_unit: "",
+      };
+
+      const url = buildWeatherLink({ latitude, longitude }, weatherOptions);
       localStorage.setItem("weatherURL", JSON.stringify(url));
       setWeatherLink(url);
 
@@ -28,8 +52,6 @@ function Weather() {
     }
   };
 
-  // Geolocation - ill use this first (never mind ill use this second)
-  // Nominatim - transfer positions(lat,lon) to actual city names
   const geolocationAttempt = () =>
     new Promise((resolve, reject) =>
       navigator.geolocation
@@ -40,7 +62,6 @@ function Weather() {
         : reject(new Error("Geolocation not supported"))
     );
 
-  // ipapi.co - ill use this as fallback but maybe something else would be better later on? this already has city name
   const ipapiAttempt = async () => {
     try {
       const res = await fetch("https://ipapi.co/json/");
