@@ -179,6 +179,24 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
               isEditBookmark={isEditBookmark}
               setIsEditBookmark={setIsEditBookmark}
             />
+
+            <Separator className="bg-white/20" />
+
+            {/* Weather Settings */}
+            <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">Weather Settings</h2>
+
+            {/* Display Weather */}
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
+              <div>
+                <Label className="text-white/90 font-semibold">Display Weather</Label>
+                <Label className="text-white/50">Show weather in dashboard</Label>
+              </div>
+
+              <Switch
+                checked={settingsObject.weather}
+                onCheckedChange={(value) => setSettingsObject((prev) => ({ ...prev, weather: value }))}
+              />
+            </div>
           </div>
         </ScrollArea>
       </SheetContent>

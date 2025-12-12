@@ -25,6 +25,8 @@ const tempSettings = {
   // bookmark
   bookmark: true,
   bookmarkData: tempBookmarkData || [],
+  // weather
+  weather: true,
 };
 
 const searchEngines = {
@@ -80,9 +82,7 @@ function App() {
         <div className="flex-1 " />
         <div className="flex-1 " />
         <div className="flex-1">
-          <div className="flex justify-end items-center h-full p-4">
-            <Weather />
-          </div>
+          <div className="flex justify-end items-center h-full p-4">{settings.weather && <Weather />}</div>
         </div>
       </header>
 
