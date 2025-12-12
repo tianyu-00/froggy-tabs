@@ -4,7 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import WeatherCardContent from "./weather-card-content";
 import { buildWeatherLink } from "@/utils/weatherLinkBuilder";
 
-function Weather() {
+function Weather({ settingsObject }) {
   const [locationStats, setLocationStats] = useState({});
   const [weather, setWeather] = useState(null);
   const [weatherLink, setWeatherLink] = useState(() => {
@@ -33,8 +33,8 @@ function Weather() {
           "pressure_msl",
           "surface_pressure",
         ],
-        temperature_unit: "",
-        wind_speed_unit: "",
+        temperature_unit: settingsObject.temperatureUnit === "celsius" ? "" : settingsObject.temperatureUnit,
+        wind_speed_unit: settingsObject.windSpeedUnit === "kms" ? "" : settingsObject.windSpeedUnit,
       };
 
       const url = buildWeatherLink({ latitude, longitude }, weatherOptions);
