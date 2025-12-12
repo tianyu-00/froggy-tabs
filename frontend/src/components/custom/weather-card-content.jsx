@@ -1,9 +1,10 @@
 import React from "react";
 import { getWeatherIcon, getWeatherText } from "./weather-code";
-import { MapPin } from "lucide-react";
+import { MapPin, ExternalLink } from "lucide-react";
 import WeatherTempChart from "./weather-chart";
+import { Separator } from "@/components/ui/separator";
 
-function WeatherCardContent({ weather, location }) {
+function WeatherCardContent({ weather, location, weatherURL }) {
   return (
     <div>
       <div className="grid gap-4">
@@ -68,6 +69,18 @@ function WeatherCardContent({ weather, location }) {
         </div>
 
         <WeatherTempChart data={weather} />
+
+        <Separator className="bg-white/20" />
+
+        <div className="flex justify-center">
+          <a
+            className="text-xs text-white/50 flex align-middle justify-center gap-1 p-1 hover:text-white"
+            href={weatherURL}
+            target="_blank"
+          >
+            Weather API <ExternalLink size={14} />
+          </a>
+        </div>
       </div>
     </div>
   );

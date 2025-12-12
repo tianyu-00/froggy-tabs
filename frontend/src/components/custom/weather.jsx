@@ -6,10 +6,17 @@ import WeatherCardContent from "./weather-card-content";
 function Weather() {
   const [locationStats, setLocationStats] = useState({});
   const [weather, setWeather] = useState(null);
+  const [weatherLink, setWeatherLink] = useState(() => {
+    const savedData = localStorage.getItem("weatherURL");
+    return savedData ? JSON.parse(savedData) : null;
+  });
 
   const loadWeather = async (latitude, longitude) => {
     try {
       const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,weather_code&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature,is_day,wind_speed_10m,wind_direction_10m,wind_gusts_10m,snowfall,showers,rain,precipitation,cloud_cover,pressure_msl,surface_pressure`;
+      localStorage.setItem("weatherURL", JSON.stringify(url));
+      setWeatherLink(url);
+
       const res = await fetch(url);
       const data = await res.json();
       setWeather(data);
@@ -123,7 +130,7 @@ function Weather() {
             </div>
           </PopoverTrigger>
           <PopoverContent className={"w-[--radix-popover-trigger-width] bg-white/5 backdrop-blur-2xl"}>
-            <WeatherCardContent weather={weather} location={locationStats} />
+            <WeatherCardContent weather={weather} location={locationStats} weatherURL={weatherLink} />
           </PopoverContent>
         </Popover>
       )}
