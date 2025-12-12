@@ -29,7 +29,7 @@ function WeatherCardContent({ weather, location, weatherURL, onRefresh }) {
           <Separator className="bg-white/20 my-2" />
 
           {/* Current Weather Info */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             {/* left */}
             <div className="flex-col items-center justify-center px-8">
               <div className="">{getWeatherIcon(weather.current.weather_code, 82)}</div>
