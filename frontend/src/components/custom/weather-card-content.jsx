@@ -31,16 +31,13 @@ function WeatherCardContent({ weather, location, weatherURL, onRefresh }) {
           {/* Current Weather Info */}
           <div className="flex gap-2">
             {/* left */}
-            <div className="flex items-center justify-center px-8">
-              <div>{getWeatherIcon(weather.current.weather_code, 82)}</div>
+            <div className="flex-col items-center justify-center px-8">
+              <div className="">{getWeatherIcon(weather.current.weather_code, 82)}</div>
+              <div className="flex justify-center">{getWeatherText(weather.current.weather_code)}</div>
             </div>
 
             {/* right */}
             <div className="">
-              <p className="text-white/50 text-sm text-nowrap">
-                Weather <span className="text-white">{getWeatherText(weather.current.weather_code)}</span>
-              </p>
-
               <p className="text-white/50 text-sm text-nowrap">
                 Temperature{" "}
                 <span className="text-white">
