@@ -134,6 +134,16 @@ function Weather({ settingsObject }) {
     getLocationAndWeather();
   }, []);
 
+  const refreshWeather = async () => {
+    if (!locationStats.latitude || !locationStats.longitude) return;
+
+    const weatherData = await loadWeather(locationStats.latitude, locationStats.longitude);
+    if (weatherData) {
+      setWeather(weatherData);
+      localStorage.setItem("weather", JSON.stringify({ timestamp: Date.now(), weatherData }));
+    }
+  };
+
   return (
     <div>
       {weather && locationStats && (
@@ -151,7 +161,12 @@ function Weather({ settingsObject }) {
             </div>
           </PopoverTrigger>
           <PopoverContent className={"w-[--radix-popover-trigger-width] bg-white/5 backdrop-blur-2xl"}>
-            <WeatherCardContent weather={weather} location={locationStats} weatherURL={weatherLink} />
+            <WeatherCardContent
+              weather={weather}
+              location={locationStats}
+              weatherURL={weatherLink}
+              onRefresh={refreshWeather}
+            />
           </PopoverContent>
         </Popover>
       )}

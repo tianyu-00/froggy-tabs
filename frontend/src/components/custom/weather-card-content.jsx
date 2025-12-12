@@ -1,19 +1,32 @@
 import React from "react";
 import { getWeatherIcon, getWeatherText } from "./weather-code";
-import { MapPin, ExternalLink } from "lucide-react";
+import { MapPin, ExternalLink, RefreshCcw } from "lucide-react";
 import WeatherTempChart from "./weather-chart";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 
-function WeatherCardContent({ weather, location, weatherURL }) {
+function WeatherCardContent({ weather, location, weatherURL, onRefresh }) {
   return (
     <div>
       <div className="grid gap-4">
         <div className="space-y-2">
-          <div className="flex gap-2 items-center">
-            <MapPin size={18} />
-            <h4 className="leading-none font-medium">{location.city ?? "Unknown"}</h4>
+          <div className="flex items-center justify-between">
+            <div className="flex gap-2 items-center">
+              <MapPin size={18} />
+              <h4 className="leading-none font-medium">{location.city ?? "Unknown"}</h4>
+            </div>
+
+            <Button
+              size="icon"
+              className="text-white bg-transparent hover:bg-white/5 hover:backdrop-blur-2xl cursor-pointer"
+              onClick={onRefresh}
+            >
+              <RefreshCcw size={18} />
+            </Button>
           </div>
           {/* <p className="text-muted-foreground text-sm">xxx</p> */}
+
+          <Separator className="bg-white/20 my-2" />
 
           {/* Current Weather Info */}
           <div className="flex gap-2">
@@ -70,7 +83,7 @@ function WeatherCardContent({ weather, location, weatherURL }) {
 
         <WeatherTempChart data={weather} />
 
-        <Separator className="bg-white/20" />
+        <Separator className="bg-white/20 my-2" />
 
         <div className="flex justify-center">
           <a
