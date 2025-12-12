@@ -1,6 +1,11 @@
 ### TO DO LIST
 
 - [ ] Convert to use zenquotes / onthisday instead
+- [ ] Google AI Search (Gemini)
+
+### NOTE
+
+url udm param https://www.google.com/search?q=&ie=UTF-8&udm=50 triggers ai mode
 
 ### Photo Credits
 
