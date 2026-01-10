@@ -41,8 +41,29 @@ const searchEngines = {
   ecosia: (query) => `https://www.ecosia.org/search?q=${encodeURIComponent(query)}`,
 };
 
+const EXPIRY_TIME = 24 * 60 * 60 * 1000; // 24 hours
+
 function App() {
   const [background, setBackground] = useState(null);
+  const [storedQuotes, setStoredQuotes] = useState(() => {
+    const saved = localStorage.getItem("storedQuotes");
+    if (!saved) return null;
+
+    try {
+      const { data, timestamp } = JSON.parse(saved);
+
+      if (Date.now() - timestamp > EXPIRY_TIME) {
+        localStorage.removeItem("storedQuotes");
+        return null;
+      }
+
+      return data;
+    } catch {
+      localStorage.removeItem("storedQuotes");
+      return null;
+    }
+  });
+
   const [quote, setQuote] = useState("");
   const [settings, setSettings] = useState(() => {
     const saved = localStorage.getItem("dashboardSettings");
@@ -51,11 +72,25 @@ function App() {
 
   const fetchQuote = async () => {
     try {
-      const url = "https://api.quotable.io/random?maxLength=80";
-
+      console.log("Fetching quotes");
+      const url = "https://corsproxy.io/?url=" + encodeURIComponent("https://zenquotes.io/api/quotes");
       const res = await fetch(url);
       const data = await res.json();
-      setQuote(data.content);
+      const randomQuote = data[Math.floor(Math.random() * data.length)].q;
+
+      localStorage.setItem(
+        "storedQuotes",
+        JSON.stringify({
+          data,
+          timestamp: Date.now(),
+        })
+      );
+
+      // multiple quotes full json
+      setStoredQuotes(data);
+
+      // 1 quote
+      setQuote(randomQuote);
     } catch (err) {
       console.error(err);
       setQuote("Could not load quote.");
@@ -63,8 +98,16 @@ function App() {
   };
 
   useEffect(() => {
+    // handle backgrounds
     setBackground(getRandomBackground());
-    fetchQuote();
+
+    // handle quotes
+    if (storedQuotes && storedQuotes.length > 0) {
+      const randomQuote = storedQuotes[Math.floor(Math.random() * storedQuotes.length)].q;
+      setQuote(randomQuote);
+    } else {
+      fetchQuote();
+    }
   }, []);
 
   useEffect(() => {
@@ -164,4 +207,15 @@ https://zenquotes.io/api/quotes - Generate a JSON array of 50 random quotes on e
 
 Theres also onthisday: https://today.zenquotes.io/
 ill decide again which one to use
+
+[
+  {
+    "q": "Excellence is not an exception, it is a prevailing attitude.",
+    "a": "Colin Powell",
+    "c": "60",
+    "h": "<blockquote>&ldquo;Excellence is not an exception, it is a prevailing attitude.&rdquo; &mdash; <footer>Colin Powell</footer></blockquote>"
+  }
+]
+
+
 */
