@@ -7,7 +7,9 @@ import Time from "./components/custom/time";
 import SettingsPanel from "./components/custom/settings";
 import BookmarksPanel from "./components/custom/bookmarks";
 import { Toaster } from "@/components/ui/sonner";
+import { Button } from "@/components/ui/button";
 import Weather from "./components/custom/weather";
+import { SiGooglegemini } from "react-icons/si";
 
 // ill use this for now as temp data, will rework later
 const tempBookmarkData = [];
@@ -41,6 +43,10 @@ const searchEngines = {
   ecosia: (query) => `https://www.ecosia.org/search?q=${encodeURIComponent(query)}`,
 };
 
+const searchAI = {
+  google: (query) => `https://www.google.com/search?q=${encodeURIComponent(query)}&ie=UTF-8&udm=50`,
+};
+
 const EXPIRY_TIME = 24 * 60 * 60 * 1000; // 24 hours
 
 function App() {
@@ -69,6 +75,7 @@ function App() {
     const saved = localStorage.getItem("dashboardSettings");
     return saved ? JSON.parse(saved) : tempSettings;
   });
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchQuote = async () => {
     try {
@@ -144,28 +151,49 @@ function App() {
         )}
 
         {settings.search && (
-          <InputGroup className="bg-white/5 backdrop-blur-md rounded-full shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14">
-            <InputGroupInput
-              name="search"
-              placeholder="Search..."
-              className="text-white placeholder-gray-300!"
-              autoComplete="off"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  const query = e.target.value.trim();
-                  if (query) {
-                    const engine = settings.searchEngine;
-                    const url = searchEngines[engine](query);
-                    window.location.href = url;
+          <div className="w-full flex justify-center items-center relative">
+            <InputGroup className="bg-white/5 backdrop-blur-md rounded-full shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14 relative">
+              <InputGroupInput
+                name="search"
+                placeholder="Search..."
+                className="text-white placeholder-gray-300!"
+                autoComplete="off"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    if (searchQuery) {
+                      const engine = settings.searchEngine;
+                      const url = searchEngines[engine](searchQuery);
+                      window.location.href = url;
+                    }
                   }
-                }
-              }}
-            />
-            <InputGroupAddon>
-              <SearchIcon className="text-white" strokeWidth={3} />
-            </InputGroupAddon>
-          </InputGroup>
+                }}
+              />
+              <InputGroupAddon>
+                <SearchIcon className="text-white" strokeWidth={3} />
+              </InputGroupAddon>
+
+              <div className="absolute center-0 -right-10">
+                {searchAI[settings.searchEngine] && (
+                  <Button
+                    size="icon"
+                    className="text-white bg-white/5 hover:bg-white/10 hover:backdrop-blur-2xl cursor-pointer"
+                    onClick={() => {
+                      if (searchQuery) {
+                        const engine = settings.searchEngine;
+                        const url = searchAI[engine](searchQuery) || null;
+                        window.location.href = url;
+                      }
+                    }}
+                  >
+                    <SiGooglegemini strokeWidth={3} />
+                  </Button>
+                )}
+              </div>
+            </InputGroup>
+          </div>
         )}
 
         {settings.bookmark && (
