@@ -152,7 +152,7 @@ function App() {
 
         {settings.search && (
           <div className="w-full flex justify-center items-center relative">
-            <InputGroup className="bg-white/5 backdrop-blur-md rounded-full shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14 relative">
+            <InputGroup className="bg-white/5 backdrop-blur-md rounded-md shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14 relative">
               <InputGroupInput
                 name="search"
                 placeholder="Search..."
@@ -175,23 +175,20 @@ function App() {
                 <SearchIcon className="text-white" strokeWidth={3} />
               </InputGroupAddon>
 
-              <div className="absolute center-0 -right-10">
-                {searchAI[settings.searchEngine] && (
-                  <Button
-                    size="icon"
-                    className="text-white bg-white/5 hover:bg-white/10 hover:backdrop-blur-2xl cursor-pointer"
-                    onClick={() => {
-                      if (searchQuery) {
-                        const engine = settings.searchEngine;
-                        const url = searchAI[engine](searchQuery) || null;
-                        window.location.href = url;
-                      }
-                    }}
-                  >
-                    <SiGooglegemini strokeWidth={3} />
-                  </Button>
-                )}
-              </div>
+              {searchAI[settings.searchEngine] && (
+                <Button
+                  className="h-14 text-white bg-white/5 hover:bg-white/10 hover:backdrop-blur-2xl cursor-pointer absolute -right-12"
+                  onClick={() => {
+                    if (searchQuery) {
+                      const engine = settings.searchEngine;
+                      const url = searchAI[engine](searchQuery) || null;
+                      window.location.href = url;
+                    }
+                  }}
+                >
+                  <SiGooglegemini strokeWidth={3} />
+                </Button>
+              )}
             </InputGroup>
           </div>
         )}
