@@ -1,6 +1,6 @@
 ### TO DO LIST
 
-- [ ] Convert to use zenquotes / onthisday instead
+- [x] Convert to use zenquotes / onthisday instead
 - [ ] Google AI Search (Gemini)
 
 ### NOTE
