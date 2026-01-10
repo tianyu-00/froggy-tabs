@@ -151,8 +151,8 @@ function App() {
         )}
 
         {settings.search && (
-          <div className="w-full flex justify-center items-center relative">
-            <InputGroup className="bg-white/5 backdrop-blur-md rounded-md shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14 relative">
+          <div className="w-full flex justify-center items-center">
+            <InputGroup className="bg-white/5 backdrop-blur-md rounded-md shadow-xl p-2 transition-all duration-300 hover:bg-white/20 focus-within:bg-white/25 w-full max-w-md border-0 h-14">
               <InputGroupInput
                 name="search"
                 placeholder="Search..."
@@ -177,7 +177,7 @@ function App() {
 
               {searchAI[settings.searchEngine] && (
                 <Button
-                  className="h-14 text-white bg-white/5 hover:bg-white/10 hover:backdrop-blur-2xl cursor-pointer absolute -right-12"
+                  className="text-white bg-transparent hover:bg-white/10 cursor-pointer"
                   onClick={() => {
                     if (searchQuery) {
                       const engine = settings.searchEngine;
