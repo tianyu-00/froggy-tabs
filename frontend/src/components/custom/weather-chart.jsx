@@ -37,7 +37,7 @@ export default function WeatherTempChart({ data }) {
 
   return (
     <Card className={"bg-white/5 backdrop-blur-2xl"}>
-      <CardContent>
+      <CardContent className="px-2">
         <ChartContainer
           config={chartConfig}
           onMouseEnter={() => setIsTooltipActive(true)}
@@ -47,7 +47,7 @@ export default function WeatherTempChart({ data }) {
             accessibilityLayer
             data={chartData}
             margin={{
-              left: 12,
+              left: 25,
               right: 12,
             }}
           >
