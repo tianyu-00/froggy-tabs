@@ -1,0 +1,189 @@
+import React, { useEffect, useState } from "react";
+import { getWeatherIcon } from "@/components/custom/weather-code";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import WeatherCardContent from "./weather-card-content";
+import { buildWeatherLink } from "@/utils/weatherLinkBuilder";
+
+function Weather({ settingsObject }) {
+  const [locationStats, setLocationStats] = useState({});
+  const [weather, setWeather] = useState(null);
+  const [weatherLink, setWeatherLink] = useState(() => {
+    const savedData = localStorage.getItem("weatherURL");
+    return savedData ? JSON.parse(savedData) : null;
+  });
+
+  const loadWeather = async (latitude, longitude) => {
+    try {
+      const weatherOptions = {
+        hourly: ["temperature_2m", "weather_code"],
+        current: [
+          "temperature_2m",
+          "weather_code",
+          "relative_humidity_2m",
+          "apparent_temperature",
+          "is_day",
+          "wind_speed_10m",
+          "wind_direction_10m",
+          "wind_gusts_10m",
+          "snowfall",
+          "showers",
+          "rain",
+          "precipitation",
+          "cloud_cover",
+          "pressure_msl",
+          "surface_pressure",
+        ],
+        temperature_unit: settingsObject.temperatureUnit === "celsius" ? "" : settingsObject.temperatureUnit,
+        wind_speed_unit: settingsObject.windSpeedUnit === "kms" ? "" : settingsObject.windSpeedUnit,
+      };
+
+      const url = buildWeatherLink({ latitude, longitude }, weatherOptions);
+      localStorage.setItem("weatherURL", JSON.stringify(url));
+      setWeatherLink(url);
+
+      const res = await fetch(url);
+      const data = await res.json();
+      setWeather(data);
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error(error.message);
+      return null;
+    }
+  };
+
+  const geolocationAttempt = () =>
+    new Promise((resolve, reject) =>
+      navigator.geolocation
+        ? navigator.geolocation.getCurrentPosition(
+            (pos) => resolve({ latitude: pos.coords.latitude, longitude: pos.coords.longitude, city: "" }),
+            reject
+          )
+        : reject(new Error("Geolocation not supported"))
+    );
+
+  const ipapiAttempt = async () => {
+    try {
+      const res = await fetch("https://ipapi.co/json/");
+      const data = await res.json();
+      console.log(data);
+      return {
+        latitude: data.latitude,
+        longitude: data.longitude,
+        city: data.city,
+      };
+    } catch (error) {
+      console.error(error.message);
+      throw new Error("");
+    }
+  };
+
+  const reverseGeocode = async (lat, lon) => {
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+      const data = await res.json();
+      return data.address.city || data.address.town || data.address.village || "";
+    } catch (error) {
+      console.error(error.message);
+      return "Unknown";
+    }
+  };
+
+  useEffect(() => {
+    const getLocationAndWeather = async () => {
+      let location = null;
+
+      // cached location // 15 mins - should be good enough
+      const cachedLocation = JSON.parse(localStorage.getItem("locationStats"));
+      if (cachedLocation && Date.now() - cachedLocation.timestamp < 15 * 60 * 1000) {
+        location = cachedLocation.data;
+        console.log("Using cached location data");
+      } else {
+        try {
+          location = await ipapiAttempt();
+        } catch {
+          location = await geolocationAttempt();
+          location.city = await reverseGeocode(location.latitude, location.longitude);
+        }
+        if (location) {
+          console.log("Using updated location data");
+          localStorage.setItem("locationStats", JSON.stringify({ timestamp: Date.now(), data: location }));
+        }
+      }
+
+      if (!location) return;
+
+      setLocationStats(location);
+
+      // cached weather // 5 mins - prevents api spam
+      const cachedWeather = JSON.parse(localStorage.getItem("weather"));
+      if (cachedWeather && Date.now() - cachedWeather.timestamp < 5 * 60 * 1000) {
+        setWeather(cachedWeather.data);
+        console.log("Using cached weather data");
+      } else {
+        const weatherData = await loadWeather(location.latitude, location.longitude);
+        if (weatherData) {
+          console.log("Using updated weather data");
+          localStorage.setItem("weather", JSON.stringify({ timestamp: Date.now(), data: weatherData }));
+        }
+      }
+
+      console.log(cachedWeather);
+    };
+
+    getLocationAndWeather();
+  }, []);
+
+  const refreshWeather = async () => {
+    if (!locationStats.latitude || !locationStats.longitude) return;
+
+    const weatherData = await loadWeather(locationStats.latitude, locationStats.longitude);
+    if (weatherData) {
+      setWeather(weatherData);
+      localStorage.setItem("weather", JSON.stringify({ timestamp: Date.now(), weatherData }));
+    }
+  };
+
+  return (
+    <div>
+      {weather && locationStats && (
+        <Popover>
+          <PopoverTrigger>
+            <div className="flex flex-col items-center p-2 rounded-md hover:bg-white/5 hover:backdrop-blur-2xl cursor-pointer">
+              <div className="flex gap-2 text-2xl justify-center items-center">
+                {getWeatherIcon(weather.current.weather_code, 28)}
+                <span>
+                  {weather.current.temperature_2m ?? "N/A"}
+                  {weather.current_units.temperature_2m ?? ""}
+                </span>
+              </div>
+              <span>{locationStats.city ?? "Unknown"}</span>
+            </div>
+          </PopoverTrigger>
+          <PopoverContent className={"w-[--radix-popover-trigger-width] bg-white/5 backdrop-blur-2xl"}>
+            <WeatherCardContent
+              weather={weather}
+              location={locationStats}
+              weatherURL={weatherLink}
+              onRefresh={refreshWeather}
+            />
+          </PopoverContent>
+        </Popover>
+      )}
+    </div>
+  );
+}
+
+export default Weather;
+
+// https://open-meteo.com/en/docs
+// https://open-meteo.com/en/docs#api_response
+// https://api.open-meteo.com/v1/forecast?latitude=<value>&longitude=<value>&hourly=temperature_2m
+// https://api.open-meteo.com/v1/forecast?latitude=<value>&longitude=<value>&hourly=temperature_2m&current=temperature_2m
+
+// https://nominatim.org/release-docs/develop/api/Overview/
+// https://nominatim.openstreetmap.org/reverse?lat=<value>&lon=<value>&<params>
+
+// https://ipapi.co/api/?javascript#introduction
+
+// https://github.com/shadcn-ui/ui/issues/3045#issuecomment-2005644793 - this adjusts the issue where popover width would not change to adapt to its content

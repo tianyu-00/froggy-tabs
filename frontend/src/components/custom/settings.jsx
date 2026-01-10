@@ -11,13 +11,20 @@ import { useState } from "react";
 import { SquarePen } from "lucide-react";
 import SettingsBookmarks from "./settings-bookmarks";
 
+const weatherTemperatureUnits = ["celsius", "fahrenheit"];
+// const weatherWindSpeedUnits = ["km", "ms", "mph", "kn"];
+const weatherWindSpeedUnits = { "km/s": "kms", "m/s": "ms", mph: "mph", knot: "kn" };
+
 function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
   const [isEditBookmark, setIsEditBookmark] = useState(false);
 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" className="text-white">
+        <Button
+          size="icon"
+          className="text-white bg-transparent hover:bg-white/5 hover:backdrop-blur-2xl cursor-pointer"
+        >
           <Settings />
         </Button>
       </SheetTrigger>
@@ -176,6 +183,78 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
               isEditBookmark={isEditBookmark}
               setIsEditBookmark={setIsEditBookmark}
             />
+
+            <Separator className="bg-white/20" />
+
+            {/* Weather Settings */}
+            <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">Weather Settings</h2>
+
+            {/* Display Weather */}
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
+              <div>
+                <Label className="text-white/90 font-semibold">Display Weather</Label>
+                <Label className="text-white/50">Show weather in dashboard</Label>
+              </div>
+
+              <Switch
+                checked={settingsObject.weather}
+                onCheckedChange={(value) => setSettingsObject((prev) => ({ ...prev, weather: value }))}
+              />
+            </div>
+
+            {/* Temperature Unit */}
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
+              <div>
+                <Label className="text-white/90 font-semibold">Temperature Unit</Label>
+                <Label className="text-white/50">Temperature unit to use</Label>
+              </div>
+
+              <div>
+                <Select
+                  value={settingsObject.temperatureUnit}
+                  onValueChange={(value) => setSettingsObject((prev) => ({ ...prev, temperatureUnit: value }))}
+                >
+                  <SelectTrigger className="bg-white/10 text-white border-white/20 w-28">
+                    <SelectValue placeholder="Select unit" />
+                  </SelectTrigger>
+
+                  <SelectContent className="capitalize">
+                    {weatherTemperatureUnits.map((unit) => (
+                      <SelectItem value={unit} key={unit}>
+                        {unit}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Wind Speed Unit */}
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
+              <div>
+                <Label className="text-white/90 font-semibold">Wind Speed Unit</Label>
+                <Label className="text-white/50">Wind speed unit to use</Label>
+              </div>
+
+              <div>
+                <Select
+                  value={settingsObject.windSpeedUnit}
+                  onValueChange={(value) => setSettingsObject((prev) => ({ ...prev, windSpeedUnit: value }))}
+                >
+                  <SelectTrigger className="bg-white/10 text-white border-white/20 w-28">
+                    <SelectValue placeholder="Select unit" />
+                  </SelectTrigger>
+
+                  <SelectContent className="">
+                    {Object.entries(weatherWindSpeedUnits).map(([key, value]) => (
+                      <SelectItem value={value} key={value}>
+                        {key}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </div>
         </ScrollArea>
       </SheetContent>
