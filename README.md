@@ -1,7 +1,7 @@
 ### TO DO LIST
 
 - [x] Convert to use zenquotes / onthisday instead
-- [ ] Google AI Search (Gemini)
+- [x] Google AI Search (Gemini)
 
 ### NOTE
 
