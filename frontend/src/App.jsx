@@ -181,7 +181,7 @@ function App() {
                   onClick={() => {
                     if (searchQuery) {
                       const engine = settings.searchEngine;
-                      const url = searchAI[engine](searchQuery) || null;
+                      const url = searchAI[engine](searchQuery);
                       window.location.href = url;
                     }
                   }}
