@@ -90,7 +90,7 @@ function App() {
         JSON.stringify({
           data,
           timestamp: Date.now(),
-        })
+        }),
       );
 
       // multiple quotes full json
@@ -203,7 +203,12 @@ function App() {
       {/* Footer */}
       <footer className="p-2 min-h-20 mt-auto flex items-center">
         <div className="flex-1 flex items-center justify-start h-full">
-          <SettingsPanel settingsObject={settings} setSettingsObject={setSettings} searchEngines={searchEngines} />
+          <SettingsPanel
+            settingsObject={settings}
+            setSettingsObject={setSettings}
+            searchEngines={searchEngines}
+            defaultSettings={tempSettings}
+          />
         </div>
 
         <div className="flex-3 flex items-center justify-center space-x-2 h-full">

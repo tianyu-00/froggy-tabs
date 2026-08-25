@@ -15,7 +15,7 @@ const weatherTemperatureUnits = ["celsius", "fahrenheit"];
 // const weatherWindSpeedUnits = ["km", "ms", "mph", "kn"];
 const weatherWindSpeedUnits = { "km/s": "kms", "m/s": "ms", mph: "mph", knot: "kn" };
 
-function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
+function SettingsPanel({ settingsObject, setSettingsObject, searchEngines, defaultSettings }) {
   const [isEditBookmark, setIsEditBookmark] = useState(false);
 
   return (
@@ -254,6 +254,29 @@ function SettingsPanel({ settingsObject, setSettingsObject, searchEngines }) {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+
+            <Separator className="bg-white/20" />
+            <h2 className="mb-4 text-white/80 uppercase text-xs tracking-wide">Other Settings</h2>
+
+            <div className="flex items-center justify-between transition-all duration-300 hover:bg-white/20 p-4 rounded">
+              <div>
+                <Label className="text-white/90 font-semibold">Reset User Settings</Label>
+                <Label className="text-white/50">Reset all settings except bookmarks</Label>
+              </div>
+
+              <Button
+                variant=""
+                onClick={() => {
+                  setSettingsObject((prev) => ({
+                    ...defaultSettings,
+                    bookmarkData: prev.bookmarkData,
+                  }));
+                }}
+                className="w-28 hover:bg-red-800 hover:text-white"
+              >
+                Reset
+              </Button>
             </div>
           </div>
         </ScrollArea>
