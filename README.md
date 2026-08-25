@@ -1,7 +1,6 @@
 <div align="center">
 <h1> Froggy Tabs </h1> 
 <p> A customizable browser start page built with React and Vite. Froggy Tabs provides a clean dashboard with a clock, search, bookmarks, weather information, quotes, customizable settings, and dynamic backgrounds. User preferences and bookmarks are stored locally using browser localStorage. <p>
-<br><br>
 
 [![madewithlove](https://img.shields.io/badge/made_with-❤-red?style=for-the-badge&labelColor=orange)](https://github.com/Tianyu-00)
 
