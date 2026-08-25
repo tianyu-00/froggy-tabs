@@ -21,9 +21,9 @@ npm install
 npm run dev
 ```
 
-## NOTE
+<!-- ## NOTE
 
-url udm param https://www.google.com/search?q=&ie=UTF-8&udm=50 triggers ai mode
+url udm param https://www.google.com/search?q=&ie=UTF-8&udm=50 triggers ai mode -->
 
 ## Photo Credits
 
