@@ -4,9 +4,9 @@
 
 [![madewithlove](https://img.shields.io/badge/made_with-❤-red?style=for-the-badge&labelColor=orange)](https://github.com/Tianyu-00)
 
-[Frontend](LINK)
+[Frontend](https://github.com/user-attachments/assets/3fdc47cd-8cd5-462d-91f4-b099cd794ad0) | [Photo Credits](https://github.com/tianyu-00/froggy-tabs#photo-credits)
 
-![gif](IMAGE LINK)
+![gif](https://github.com/user-attachments/assets/3fdc47cd-8cd5-462d-91f4-b099cd794ad0))
 
 </div>
 
